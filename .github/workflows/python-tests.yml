@@ -1,0 +1,27 @@
+name: Python software tests
+
+on:
+  push:
+    paths:
+      - "software/**"
+      - ".github/workflows/python-tests.yml"
+      - "README.md"
+  pull_request:
+    paths:
+      - "software/**"
+      - ".github/workflows/python-tests.yml"
+      - "README.md"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run unit tests
+        run: PYTHONPATH=software python -m unittest discover -s software/tests -v
