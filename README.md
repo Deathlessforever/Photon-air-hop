@@ -53,3 +53,19 @@ See:
 ## Contributions
 
 Keep experiments reproducible. Every result should state hardware, circuit/software version, environment, test count, raw measurements, and uncertainty. Failed tests are valuable results too.
+
+## Software prototype
+
+The first software modules are intentionally small and testable:
+
+- `software/photon_air_hop/packet.py`: versioned binary frame, length validation, CRC-16/CCITT-FALSE, and TTL-aware forwarding helper.
+- `software/photon_air_hop/network.py`: deterministic graph-based multi-hop simulator. Edges represent links you explicitly declare usable.
+- `software/tests/test_protocol.py`: unit tests for packet integrity, malformed frames, TTL, and a three-node route.
+
+Run tests from the repository root:
+
+```bash
+PYTHONPATH=software python -m unittest discover -s software/tests -v
+```
+
+**Important:** the graph simulator is not a physical optical-channel simulator. It does not predict atmospheric scattering, receiver sensitivity, packet error rates, or real-world range. Those need hardware measurements and a validated channel model.
